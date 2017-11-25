@@ -1,0 +1,31 @@
+<html>
+
+    <style>
+        html , body {
+            margin: 0px;
+            border: 0px;
+            padding: 0px;
+        }
+
+        .centeredVH {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Open Sans', sans-serif;
+            /* background-color: dimgray; */
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+
+    <body id="bod">
+        <div class="centeredVH">
+            <canvas onmousemove="movement(event)" id="wheelCanvas" width="300" height="300"></canvas>
+            <h1 align="center" id="colorCodeHEXOut">#FFFFFF</h1>
+            <h1 align="center" id="colorCodeRGBOut">rgb(255,255,255)</h1>
+        </div>
+    </body>
+
+    <script src="wheelHardCode.js"></script>
+</html>

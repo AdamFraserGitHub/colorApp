@@ -1,0 +1,117 @@
+<html>
+    <style>
+        .colorViewContainerDiv {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            width: 50%;
+            padding-top: 25%; /*aspect ratio 1:2*/
+            background-color: black;
+            transform: translate(-50%, -50%);
+        }
+
+        .avgColorViewDiv {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0px;
+            background-color: red;
+        }
+
+        .popularColor1Div {
+            position: absolute;
+            width: 25%;
+            height: 50%;
+            left: 50%;
+            top: 0px;
+            background-color: springgreen;
+        }
+
+        .popularColor2Div {
+            position: absolute;
+            width: 25%;
+            height: 50%;
+            left: 75%;
+            top: 0px;
+            background-color: blue;
+        }
+
+        .popularColor3Div {
+            position: absolute;
+            width: 25%;
+            height: 50%;
+            left: 50%;
+            top: 50%;
+            background-color: violet;
+        }
+
+        .popularColor4Div {
+            position: absolute;
+            width: 25%;
+            height: 50%;
+            left: 75%;
+            top: 50%;
+            background-color: silver;
+        }
+
+        .colorCodeOverview {
+            position: absolute;
+            bottom: 0px;
+            left: 10px;
+        }
+
+        .eventEntryDiv {
+            width: 50%;
+            height: 100px;
+            background-color: whitesmoke;
+        }
+
+        .mainTable {
+            height: 100%;
+            width: 100%;
+        }
+
+        .eventColorChoiceDiv {
+            width: 100px;
+            height: 100px;
+            background-color: hotpink;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        body, html {
+            margin: 0px;
+            padding: 0px;
+            background-color: white;
+        }
+    </style>
+
+    <title></title>
+
+    <body onresize="windowResized()">
+        <table align="center" class="mainTable" >
+            <tr>
+                <td>
+                    <div class="colorViewContainerDiv">
+                        <div class="avgColorViewDiv"><p class="colorCodeOverview">test1</p></div>
+                        <div class="popularColor1Div"><p class="colorCodeOverview">test1</p></div>
+                        <div class="popularColor2Div"><p class="colorCodeOverview">test1</p></div>
+                        <div class="popularColor3Div"><p class="colorCodeOverview">test1</p></div>
+                        <div class="popularColor4Div"><p class="colorCodeOverview">test1</p></div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="left">
+                    <div class="eventEntryDiv">
+                    <div class="eventColorChoiceDiv"></div>
+                    </div>
+                </td>
+            </tr>
+            
+            
+    </body>
+
+    <script src="index.js"></script>
+</html>
