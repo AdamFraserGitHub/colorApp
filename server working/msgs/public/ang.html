@@ -1,0 +1,38 @@
+<html ng-app>
+    <head>
+        <script src="angular-1.2.17.js"></script>
+    </head>
+    <body>
+        <div ng-controller="firstController"> 
+        <!--firstController is the name of the controller function, its scope expands within this div element  -->
+            <input ng-model="modelData" > 
+        <!--
+            This is like a global declaration of the variable 'modelData' within the controllers scope(within div lement in this case) without the need to declare it anywhere 
+            This variable now can be accessed inside the html to render it by using it inside the double braces {{}}, this is how you can bind the data with the views .
+            Now lets say you have some application logic to be performed using this data , so you need to be able to access the variable within the Javascript too , 
+            the variable `modelData` can be accessed only within the controller function which is incharge the current html scope , in this case the data is accessible 
+            through the firstController() , controller function (since this is the controller function for the input elements scope,thats is the input element is inside 
+            the scope of the div with ng-controller="firstController").Now as i had already mentioned the model's data can be accessed using the $scope object 
+            which is passed onto the controller,so this can be accessed using $scope.modelData inside the controller function of the Javscript 
+            ng-model="modelData suggests that the $scope.modelData is the controller variable with which this view is associated,and this is how angular easily 
+            brings in binding of the views and data with the help of the controller.
+            Now lets say you have used {{modelData}} at ten different places in your html to render the view , the change to the modelData is automatically 
+            propagated to all thee places in views so that the html with new data is rendered
+              -->  
+            <p>{{modelData}}</p>
+        </div>      
+        
+        <script>
+            function firstController($scope){ //controller function
+                 $scope.modelData=''; 
+                 /*This is the same variable which is used in html,now the value is variable is binded the input box data*/
+                 $scope.$watch('modelData',function(newVal,oldval,scope){
+                   console.log("New: "+newVal);
+                 },true); 
+                 /*$scope.$watch listens to the changes in the modelData variable , 
+                    The value in the modelData variable is changed when the value in the input box is changed , these are automatically bound together 
+                    using <input ng-model="modelData" > */
+            } 
+        </script> 
+    </body>
+</html>

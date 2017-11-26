@@ -1,0 +1,51 @@
+<html ng-app>
+<body>
+    <form ng-controller='appController' ng-submit="send()">
+      <!--send() function from the controller is called on form submission -->
+        <textarea ng-model='data.textdata'></textarea>
+        <pre>{{data.textdata}}</pre>
+        <input type="submit" ngClick="Submit">
+        <div><pre>{{response.data}}</pre>
+        </div>
+        <ng-form>
+
+                <textarea rows="4" cols="50" id="msgs">
+                        this is where teh messages come in
+                        </textarea>
+
+    <script src="angular-1.2.17.js">
+    </script>
+    <script>
+        function appController($scope, $http) {
+            /*$http directive is used to communicate ot the server */
+            $scope.data = {}
+            $scope.response = {}
+
+            $scope.send = function () {
+                /*executed when submit is clicked*/
+                console.log("inside click");
+                console.log($scope.data.textdata);
+
+                var posting = $http({
+                    method: 'POST',
+                    /*posting to /post */
+                    url: '/post',
+                    data: $scope.data,
+
+                    processData: false
+                })
+                posting.success(function (response) {
+                    document.getElementById("msgs").value="";
+                    /*executed when server responds back*/
+                    console.log(response);
+                    var respStr = response.split(',');
+                    for(var i = 0; i < respStr.length; i++) {
+                        document.getElementById("msgs").value=document.getElementById("msgs").value+"\n" + respStr[i];
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+
+</html>
