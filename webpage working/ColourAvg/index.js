@@ -15,6 +15,8 @@ rAvg = Math.round(rAvg / colors.length);
 gAvg = Math.round(gAvg / colors.length);
 bAvg = Math.round(bAvg / colors.length);
 
+console.log(rAvg + " " + gAvg + " " + bAvg);
+
 fillColor = 'rgb(' + rAvg + ',' + gAvg + ',' + bAvg + ')';
 ctx.fillStyle = fillColor;
 ctx.rect(0,0,800,400);
