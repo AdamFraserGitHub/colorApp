@@ -1,5 +1,5 @@
 <html ng-app>
-<body>
+<body id="body">
     <form ng-controller='appController' ng-submit="send()">
       <!--send() function from the controller is called on form submission -->
         <textarea ng-model='data.textdata'></textarea>
@@ -38,10 +38,7 @@
                     document.getElementById("msgs").value="";
                     /*executed when server responds back*/
                     console.log(response);
-                    var respStr = response.split(',');
-                    for(var i = 0; i < respStr.length; i++) {
-                        document.getElementById("msgs").value=document.getElementById("msgs").value+"\n" + respStr[i];
-                    }
+                    document.getElementById('body')
                 });
             }
         };
