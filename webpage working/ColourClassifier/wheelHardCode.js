@@ -48,7 +48,11 @@ function colorChanger(theta) {
             currentColor.r += 4.25;
         }
     }
-
+    if (theta%45 == (theta%45).toPrescision(0)) {
+        currentColor.r=0;
+        currentColor.g = 0;
+        currentColor.b = 0;
+    }
     degToColor[theta] = new Object;
     degToColor[theta].r = currentColor.r;
     degToColor[theta].g = currentColor.g;

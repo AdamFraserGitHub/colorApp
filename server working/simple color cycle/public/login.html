@@ -1,0 +1,40 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+        <link rel="stylesheet" href="stylesheet.css">
+
+        <title>color app login</title>
+    </head>
+
+    <body>
+
+        <h1 class="centeredLargeText">Color App</h1>
+
+        <form action="/login" method="POST" class="loginForm">
+
+            <h3 class="largeText">Username</h3>
+
+            <input type="text" name="username" class="form-control" placeholder="unique username"/>
+            <br/>
+
+            <h3 class="largeText">Gender</h3>
+
+            <label class="smallText">male</label>
+            <input type="radio" id="masculineGender" value="masculine" name="gender"/>
+            <br/>
+
+            <label class="smallText">female</label>
+            <input type="radio" id="feminineGender" value="feminine" name="gender"/>
+            <br/>
+
+            <label class="smallText">fake</label>
+            <input type="radio" id="neutralGender" value="neutral" name="gender"/>
+            <br/>
+
+            <input type="submit" value="Login!" class="btn btn-default" id="submitBtn"></input>
+        </form>
+    </body>
+
+</html>

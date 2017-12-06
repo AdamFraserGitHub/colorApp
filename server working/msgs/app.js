@@ -14,7 +14,8 @@ app.use(bodyParser.json());
 /*to access the posted data from client using request bpdy*/
 app.post('/post', function (req, res) {
     /* Handling the AngularJS post request*/
-    console.log(req.host);
+    console.log(req.hostname);
+    console.log(req.body.command)
     if(req.body.command == "gPlus") {
         color.g+=5;
     }

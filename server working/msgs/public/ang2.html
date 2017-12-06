@@ -2,8 +2,8 @@
 <body id="body">
     <form ng-controller='appController' ng-submit="send()">
       <!--send() function from the controller is called on form submission -->
-        <textarea ng-model='data.textdata'></textarea>
-        <pre>{{data.textdata}}</pre>
+        <textarea ng-model='data.command'></textarea>
+        <pre>{{data.command}}</pre>
         <input type="submit" ngClick="Submit">
         <div><pre>{{response.data}}</pre>
         </div>
@@ -24,13 +24,13 @@
             $scope.send = function () {
                 /*executed when submit is clicked*/
                 console.log("inside click");
-                console.log($scope.data.textdata);
+                console.log($scope.data.command);
 
                 var posting = $http({
                     method: 'POST',
                     /*posting to /post */
                     url: '/post',
-                    data: $scope.data,
+                    data: "gPlus",
 
                     processData: false
                 })

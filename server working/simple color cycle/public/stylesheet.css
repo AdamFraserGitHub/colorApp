@@ -1,0 +1,66 @@
+.loginForm {
+    background-color: whitesmoke;
+    width: 10%;
+    min-width: 200px;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 30px;
+}
+
+.centeredLargeText {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 52;
+    text-align: center;
+    margin-top: 5%;
+    color: black;
+}
+
+.largeText {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24;
+    color: black;
+}
+
+.smallText {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12;
+    color: black;
+}
+
+#submitBtn {
+    margin-top: 30px;
+    color: black;
+}
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    background-color: red;
+    animation: bgColor 10s infinite linear;
+}
+
+@keyframes bgColor {
+    16.66% {
+      background-color: #FFFF00;
+    }
+    33.33% {
+      background-color: #00FF00;
+    }
+    50% {
+      background-color: #00FFFF;
+    }
+    66.66% {
+      background-color: #0000FF;
+    }
+    83.32% {
+      background-color: #FF00FF;
+    }
+    100% {
+      background-color: #FF0000;
+    }
+  }
+
