@@ -10,7 +10,9 @@
     <body>
         <h3 id="nUsersTxt">Users:</h3>
         <textarea readonly class="usersBox"></textarea>
-        <button id="shutdownBtn" class="btn btn-danger">shutdown!</button>
+        <form method="POST" action="/shutdown">
+            <input type="submit" id="shutdownBtn" class="btn btn-danger" value="Shutdown!"></input>
+        </form>
     </body>
 
     <script>

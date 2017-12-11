@@ -55,7 +55,12 @@ app.post('/login', function(req, res) {
         console.log("ERROR! user name (\"" + usernameInput + "\") already exists");
         sendPage("loginUNameTaken.html", res); //ok this is some really janky assed shit right here ... fix it ASAP!
     }
-})
+});
+
+//m8. fkin srsly!?!
+app.post('/shutdown', function(req, res) {
+    process.exit();
+});
 
 //run server on http://IP:port/
 app.listen(port, '0.0.0.0');
