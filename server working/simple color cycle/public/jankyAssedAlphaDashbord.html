@@ -1,0 +1,25 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="alphaDashbordStylesheet.css">
+        <script src="/socket.io/socket.io.js"></script>
+        <title>dashbord alpha</title>
+    </head>
+
+    <body>
+        <h3 id="nUsersTxt">Users:</h3>
+        <textarea readonly class="usersBox"></textarea>
+        <button id="shutdownBtn" class="btn btn-danger">shutdown!</button>
+    </body>
+
+    <script>
+        var socket = io();
+        var nUsersTxt = document.getElementById("nUsersTxt");
+
+        socket.on('broadcast', function(data) {
+            nUsersTxt.innerHTML = "Users: " + data.description;
+        });
+    </script>
+
+</html>

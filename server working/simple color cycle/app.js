@@ -10,6 +10,18 @@ var app = express();
 var port = 8080;
 var serverAddr = ip.address().toString();
 
+//socketsIO config
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket){
+    console.log('a user connected');
+  });
+  
+  http.listen(port, serverAddr, function(){
+    console.log('listening on *:3000');
+  });
+
 //file system variables
 var publicDir = __dirname + '/public';
 
@@ -37,6 +49,7 @@ app.post('/login', function(req, res) {
     
     if(usrNameUnique(usernameInput)) {
         newUser(usernameInput, genderInput);
+        sendUserToDash(usernameInput, genderInput, users.length);
         sendPage("colorSelectorWheel.html", res);
     } else {
         console.log("ERROR! user name (\"" + usernameInput + "\") already exists");
@@ -57,6 +70,22 @@ function newUser(userName, userGender) {
     console.log("new user\n=========\nname: " + tempUserData.userName + "\ngender: " + tempUserData.gender + "\n\n\n");
 }
 
+//whenever a user connects to the server update the number of users (useless but just an example)
+// var nClients = 0; //hmmm includes dash!
+// io.on('connection', function(socket) {
+//     console.log("a user has connected - telling dashbord");
+//     nClients ++;
+    
+//     io.sockets.emit('broadcast', { description: nClients});
+// });
+
+// io.on('disconnect', function() {
+//     console.log("a user has disconnected - telling dashbord");
+//     nClients --;
+
+//     io.sockets.emit('broadcast', { description: nClients});
+// });
+
 //checks that the username passes into it is not already in use
 //PROBLEMS : inneficient (e.g. if first char doesnt match no need to check rest)
 //           puts possibly unnecisary load on server and connection to client 
@@ -69,6 +98,11 @@ function usrNameUnique(usernameInput) {
         counter++;
     }
    return unique;
+}
+
+//tells dash if user connect (REALLY doesnt work well)
+function sendUserToDash(username, gender, numberUsers) {
+    io.sockets.emit('broadcast', {description: numberUsers});
 }
 
 //to be exported
