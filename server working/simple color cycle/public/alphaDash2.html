@@ -1,0 +1,40 @@
+<html>
+
+    <head>
+        <title>Super Alpha Dashbord</title>
+
+        <style>
+            /* padds cells while not padding border */
+
+            table { border-collapse: separate; }
+            td { padding: 20px; }
+            td:first-child { padding-left: 0px; }
+            td:last-child { padding-right: 0px; }
+            /* td:first-child { padding-top: 0px; }
+            td:last-child { padding-top: 0px; } */
+            td { padding-bottom: 0px; }
+            td { padding-top: 0px; }
+
+            .headers {
+                padding-bottom: 20px;
+            }
+        </style>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+
+    <body>
+        <h1 style="color:white;">User Data</h1>
+        <table id="userDataTable"></table>
+    </body>
+    <script>
+        var socket = io();
+
+        socket.emit ('dashConnected');
+
+        socket.on('initUserData', function(data) {
+            console.log(data);
+        });
+        
+    </script>
+    <!-- <script src="userDataHandler.js"></script> -->
+</html>

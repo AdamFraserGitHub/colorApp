@@ -1,5 +1,6 @@
 <html>
-
+    
+    <head>
     <style>
         html , body {
             margin: 0px;
@@ -18,14 +19,18 @@
     </style>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
 
     <body id="bod">
         <div class="centeredVH">
-            <canvas onmousemove="movement(event)" id="wheelCanvas" width="300" height="300"></canvas>
+            <img id="colorWheel" onclick="sendColorDataToServer()" onmousemove="movement(event)" src="colorWheel.png" width="300" height="300"/>
             <h1 align="center" id="colorCodeHEXOut">#FFFFFF</h1>
             <h1 align="center" id="colorCodeRGBOut">rgb(255,255,255)</h1>
         </div>
     </body>
 
+    <script src="colors.js"></script>
     <script src="wheelHardCode.js"></script>
 </html>
