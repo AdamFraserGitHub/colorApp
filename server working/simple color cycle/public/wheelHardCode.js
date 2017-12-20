@@ -66,15 +66,37 @@ function applyCASTOffset(x,y,thetaToQuadLine) {
     }
 }
 
-function sendColorDataToServer () {
+//possibly redundant
+// function sendColorDataToServer () {
+
+//     if(colorCodeHEX != '#FFFFFF') {
+//         $.post("/colorChoice",
+//         {
+//             colorClass: 'ri',
+//             colorChoice: colorCodeRGB
+//         }, function(data, status){
+//             alert("Data: " + data + "\nStatus: " + status);
+//         });
+//     }
+// }
+
+//handles sockets
+var socket = io('/colorConnect');
+var userID;
+
+socket.on('connect', function() {
+    console.log("connected");
+
+    socket.on('UIDSend', function(data) {
+        console.log("test")
+        userID = data.UID;
+        console.log(userID);
+    });
+});
+
+function sendColorDataToServer() {
 
     if(colorCodeHEX != '#FFFFFF') {
-        $.post("/colorChoice",
-        {
-            colorClass: 'ri',
-            colorChoice: colorCodeRGB
-        }, function(data, status){
-            alert("Data: " + data + "\nStatus: " + status);
-        });
-    }
+        socket.emit('colorChoice', {UID: userID, colorChoiceRGB: colorCodeRGB, colorChoiceHEX : colorCodeHEX});
+    }  
 }

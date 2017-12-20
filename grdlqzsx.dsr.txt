@@ -1,0 +1,19 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	new file:   server working/dashbordWorking(sock.io)/public/dash.html
+#	new file:   server working/dashbordWorking(sock.io)/public/dash.js
+#	new file:   server working/dashbordWorking(sock.io)/server.js
+#	modified:   server working/simple color cycle/app.js
+#	modified:   server working/simple color cycle/public/alphaDash2.html
+#	modified:   server working/simple color cycle/public/colorSelectorWheel.html
+#	modified:   server working/simple color cycle/public/userDataHandler2.js
+#	modified:   server working/simple color cycle/public/wheelHardCode.js
+#	modified:   server working/simple color cycle/webServer.js
+#	modified:   webpage working/ColourClassifier/index.html
+#
+

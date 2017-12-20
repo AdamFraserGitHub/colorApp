@@ -2,7 +2,7 @@
 
     <head>
         <title>Super Alpha Dashbord</title>
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <style>
             /* padds cells while not padding border */
 
@@ -18,23 +18,64 @@
             .headers {
                 padding-bottom: 20px;
             }
+
+            html, body {
+                margin: 10px;
+            }
+
+            #controlButtons {
+                position: absolute;
+                /* width: 10%;
+                height: 10%; */
+                /* min-height: 40px;
+                min-width: 90px; */
+                top: 20px;
+                left: 50%;
+                width: 50%;
+                height: 50px;
+                transform: translate(-50%, 0%);
+            }
+
+            #controlButtons > button {
+                width: 33.333%;
+                height: 100%;
+            }
+
         </style>
         <script src="/socket.io/socket.io.js"></script>
+        <script src="userDataHandler2.js"></script>
     </head>
 
     <body>
+        <div class="btn-group" role="group" aria-label="control buttons" id="controlButtons">
+            <button type="button" class="btn btn-danger">shutdown</button>
+            <button type="button" class="btn btn-warning">restart</button>
+            <button type="button" class="btn btn-success">save</button>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+
         <h1 style="color:white;">User Data</h1>
         <table id="userDataTable"></table>
     </body>
     <script>
-        var socket = io();
+        var io = io();
 
-        socket.emit ('dashConnected');
+        console.log("maky");
 
-        socket.on('initUserData', function(data) {
-            console.log(data);
+        io.on('initUserData', function(data) {
+            // console.log(data);
+            initDataReceived(data);
+        });
+
+        io.on('connect', function(socket) {
+            console.log("1");
+            console.log("sock" + socket);
+            io.emit('dashConnected', 'data');
+            console.log("2");
         });
         
     </script>
-    <!-- <script src="userDataHandler.js"></script> -->
 </html>

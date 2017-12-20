@@ -12,10 +12,12 @@ var users = []; /*user id is given by index
 webServModule.getApp().post('/login', function(req, res) {
     var usernameInput = req.body.username;
     var genderInput = req.body.gender;
-    
+    var userIP = req.connection.remoteAddress;
+
+
     if(usrNameUnique(usernameInput)) {
-        newUser(usernameInput, genderInput);
-        sendNewUserToDash(usernameInput, genderInput, users.length);
+        userLogin(usernameInput, genderInput, userIP);
+        sendNewLogin(usernameInput, genderInput, users.length);
         webServModule.sendPage("colorSelectorWheel.html", res);
     } else {
         console.log("ERROR! user name (\"" + usernameInput + "\") already exists");
@@ -31,16 +33,20 @@ webServModule.getApp().post('/shutdown', function(req, res) {
 //legacy dash
 webServModule.getApp().get('/legacyDash', function(req, res) {
     webServModule.sendPage('alphaDash2.html', res);
-    sendInitUserDataToDash();
+    // sendInitUserDataToDash();
     console.log("test");
 });
 
-webServModule.listenForColorChoice();
+// webServModule.listenForColorChoice();
 
-function newUser(userName, userGender) {
+function userLogin(userName, userGender, userIP) {
     var tempUserData = new Object();
     tempUserData.userName = userName;
     tempUserData.gender = userGender;
+    tempUserData.IP = userIP;
+    console.log(tempUserData.IP);
+    tempUserData.colorChoiceRGB = '-----'; //until choose color (unneccesary load on server)
+    tempUserData.colorChoiceHEX = '-----';
 
     users.push(tempUserData);
     console.log("\nnew user");
@@ -61,17 +67,55 @@ function usrNameUnique(usernameInput) {
    return unique;
 }
 
-// //tells dash when user logs in and chooses a color
-function sendNewUserToDash() {
-    webServModule.getSockIO().sockets.emit('initUserData', {description: users});
-}
-
-function sendInitUserDataToDash() {
-    
-}
+webServModule.getApp().post('/colorChoice', function(req, res) {
+    console.log(req.body);
+    // users[?].colorChoice = req.body.colorChoice
+});
 
 webServModule.getSockIO().on('dashConnected', function() {
-    webServModule.getSockIO().sockets.emit('initUserData', {description: users});
-})
+    console.log("YAAAAAAYY");
+});
 
-// webServModule.getSockIO.on('connect' function)
+// //tells dash when user logs in and chooses a color
+function sendNewLogin() {
+    webServModule.getSockIO().sockets.emit('initUserData', {usersFromServer: users[users.length - 1]});
+}
+
+
+//whenever ANYONE connects (really bad)
+webServModule.getSockIO().on('connection', function() {
+    sendInitUserDataToDash();
+});
+
+function sendInitUserDataToDash() {
+    webServModule.getSockIO().sockets.emit('initUserData', {usersFromServer: users});
+}
+
+var dashConnect = webServModule.getSockIO().of('/colorConnect');
+
+dashConnect.on('connect', function(socket){
+    console.log('a color wheel connected');
+
+    dashConnect.emit('UIDSend', {UID: (users.length - 1)});
+
+    socket.on('colorChoice', function(data) {
+        console.log("mkaaay");
+        console.log(data);
+        users[data.UID].colorChoiceRGB = data.colorChoiceRGB;
+        users[data.UID].colorChoiceHEX = data.colorChoiceHEX;
+
+        var dateHandler = new Date();
+        var dateString;
+
+        if(dateHandler.getHours() < 10) { dateString += '0' + dateHandler.getHours() + ':'; } 
+        else { dateString += dateHandler.getHours() + ':'; }
+
+        if(dateHandler.getMinutes() < 10) { dateString += '0' + dateHandler.getMinutes() + ':'; } 
+        else { dateString += dateHandler.getMinutes() + ':'; }
+        
+        if(dateHandler.getSeconds() < 10) { dateString += '0' + dateHandler.getSeconds(); + ':'; } 
+        else { dateString += dateHandler.getSeconds() + ':'; }
+
+        users[data.UID].colorSubmitTime = dateString;
+    });
+});

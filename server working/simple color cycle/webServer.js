@@ -28,11 +28,11 @@ app.get('/', function(req, res){
     res.sendFile(publicDir + '/login.html');
 });
 
-exports.listenForColorChoice = function() {
-    app.post('/colorChoice', function(req, res) {
-        console.log(req.body);
-    });
-}
+// exports.listenForColorChoice = function() {
+//     app.post('/colorChoice', function(req, res) {
+//         console.log(req.body);
+//     });
+// }
 
 //callable functions
 exports.startup = function () {
