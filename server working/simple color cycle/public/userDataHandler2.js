@@ -10,7 +10,7 @@ function initDataReceived(usersdat) {
     document.body.style.backgroundColor = 'rgb(0,0,0)';
     users = usersdat.usersFromServer;
     var newRow;
-    var cells = []; //0 - usrName, 1 - gender, 2 - IP, 3 - colorChoice, 4 - colorClass, 5 - time, 
+    var cells = []; //0 - usrName, 1 - gender, 2 - IP, 3 - colorChoice, 4 - colorClass, 5 - time, WRONG
     var userDataTable = document.getElementById('userDataTable');
 
     displayHeaders(userDataTable);
@@ -30,6 +30,24 @@ function initDataReceived(usersdat) {
         // addCellData(colorClass[i], colors[i], cells[4]);
         // addCellData(submitTime[i], colors[i], cells[5]);
     }
+    console.log("initdata");
+}
+
+function singleUserLoginDataRecieved(userdat) {
+    users[users.length - 1] = userdat.loginData;
+    var userDataTable = document.getElementById('userDataTable');
+    var newRow;
+    newRow = userDataTable.insertRow(1); // adds new row at top of table just bellow headers. means in reversed order of array
+    var cells = []; //0 - usrName, 1 - gender, 2 - IP, 3 - colorChoice, 4 - colorClass, 5 - time,  WRONG
+    for (var j = 0; j < 6; j++) { cells[j] = newRow.insertCell(j); }
+
+    addCellData(users[users.length - 1].userName, users[users.length - 1].colorChoiceRGB, cells[0]);
+    addCellData(users[users.length - 1].gender, users[users.length - 1].colorChoiceRGB, cells[1])
+    addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[2]);
+    addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[3]);
+    addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[4]);
+    addCellData(users[users.length - 1].IP, users[users.length - 1].colorChoiceRGB, cells[5]);
+    console.log("other data");
 }
 
 //displays the names of each field at the top 

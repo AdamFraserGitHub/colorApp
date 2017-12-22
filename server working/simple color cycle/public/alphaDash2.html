@@ -61,20 +61,22 @@
         <table id="userDataTable"></table>
     </body>
     <script>
-        var io = io();
+        var io = io('/legacyDashSock');
 
-        console.log("maky");
 
+        io.on('connect', function() {
+            console.log("connected");
+        });
         io.on('initUserData', function(data) {
-            // console.log(data);
             initDataReceived(data);
         });
 
-        io.on('connect', function(socket) {
-            console.log("1");
-            console.log("sock" + socket);
-            io.emit('dashConnected', 'data');
-            console.log("2");
+        io.on('singleUserLoginData', function(data) {
+            singleUserLoginDataRecieved(data);
+        });
+
+        io.on('userColorChoice', function (data) {
+            
         });
         
     </script>

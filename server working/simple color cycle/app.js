@@ -72,40 +72,44 @@ webServModule.getApp().post('/colorChoice', function(req, res) {
     // users[?].colorChoice = req.body.colorChoice
 });
 
-webServModule.getSockIO().on('dashConnected', function() {
-    console.log("YAAAAAAYY");
-});
+var dashConnect = webServModule.getSockIO().of('/legacyDashSock');
 
 // //tells dash when user logs in and chooses a color
 function sendNewLogin() {
-    webServModule.getSockIO().sockets.emit('initUserData', {usersFromServer: users[users.length - 1]});
+    dashConnect.emit('singleUserLoginData', {loginData: users[users.length - 1]});
 }
 
-
 //whenever ANYONE connects (really bad)
-webServModule.getSockIO().on('connection', function() {
+dashConnect.on('connect', function() {
     sendInitUserDataToDash();
 });
 
 function sendInitUserDataToDash() {
-    webServModule.getSockIO().sockets.emit('initUserData', {usersFromServer: users});
+    dashConnect.emit('initUserData', {usersFromServer: users});
 }
 
-var dashConnect = webServModule.getSockIO().of('/colorConnect');
+sendColorChoiceToDash(UID) {
+    dashConnect.emit('userColorChoice', {
+                                         UID: UID, 
+                                         colorChoiceRGB: users[UID].colorChoiceRGB, 
+                                         colorChoiceHEX: users[UID].colorChoiceHEX, 
+                                         colorSubmitTime: users[UID].colorSubmitTime
+                                        });
+}
 
-dashConnect.on('connect', function(socket){
+var colorWheelConnect = webServModule.getSockIO().of('/colorConnect');
+
+colorWheelConnect.on('connect', function(socket){
     console.log('a color wheel connected');
 
-    dashConnect.emit('UIDSend', {UID: (users.length - 1)});
+    colorWheelConnect.emit('UIDSend', {UID: (users.length - 1)});
 
     socket.on('colorChoice', function(data) {
-        console.log("mkaaay");
-        console.log(data);
         users[data.UID].colorChoiceRGB = data.colorChoiceRGB;
         users[data.UID].colorChoiceHEX = data.colorChoiceHEX;
 
         var dateHandler = new Date();
-        var dateString;
+        var dateString = '';
 
         if(dateHandler.getHours() < 10) { dateString += '0' + dateHandler.getHours() + ':'; } 
         else { dateString += dateHandler.getHours() + ':'; }
@@ -113,9 +117,11 @@ dashConnect.on('connect', function(socket){
         if(dateHandler.getMinutes() < 10) { dateString += '0' + dateHandler.getMinutes() + ':'; } 
         else { dateString += dateHandler.getMinutes() + ':'; }
         
-        if(dateHandler.getSeconds() < 10) { dateString += '0' + dateHandler.getSeconds(); + ':'; } 
-        else { dateString += dateHandler.getSeconds() + ':'; }
+        if(dateHandler.getSeconds() < 10) { dateString += '0' + dateHandler.getSeconds(); } 
+        else { dateString += dateHandler.getSeconds(); }
 
         users[data.UID].colorSubmitTime = dateString;
+        sendColorChoiceToDash(data.UID);
     });
 });
+
