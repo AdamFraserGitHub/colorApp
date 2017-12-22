@@ -67,6 +67,7 @@
         io.on('connect', function() {
             console.log("connected");
         });
+        
         io.on('initUserData', function(data) {
             initDataReceived(data);
         });
@@ -76,7 +77,7 @@
         });
 
         io.on('userColorChoice', function (data) {
-            
+            colorChoiceRecieved(data);
         });
         
     </script>

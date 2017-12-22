@@ -88,7 +88,7 @@ function sendInitUserDataToDash() {
     dashConnect.emit('initUserData', {usersFromServer: users});
 }
 
-sendColorChoiceToDash(UID) {
+function sendColorChoiceToDash(UID) {
     dashConnect.emit('userColorChoice', {
                                          UID: UID, 
                                          colorChoiceRGB: users[UID].colorChoiceRGB, 
@@ -124,4 +124,3 @@ colorWheelConnect.on('connect', function(socket){
         sendColorChoiceToDash(data.UID);
     });
 });
-

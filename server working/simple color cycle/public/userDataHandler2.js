@@ -34,7 +34,7 @@ function initDataReceived(usersdat) {
 }
 
 function singleUserLoginDataRecieved(userdat) {
-    users[users.length - 1] = userdat.loginData;
+    users.push(userdat.loginData);
     var userDataTable = document.getElementById('userDataTable');
     var newRow;
     newRow = userDataTable.insertRow(1); // adds new row at top of table just bellow headers. means in reversed order of array
@@ -48,6 +48,26 @@ function singleUserLoginDataRecieved(userdat) {
     addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[4]);
     addCellData(users[users.length - 1].IP, users[users.length - 1].colorChoiceRGB, cells[5]);
     console.log("other data");
+}
+
+function colorChoiceRecieved(colorChoiceData) {
+    users[colorChoiceData.UID].colorChoiceRGB = colorChoiceData.colorChoiceRGB;
+    users[colorChoiceData.UID].colorChoiceHEX = colorChoiceData.colorChoiceHEX;
+    users[colorChoiceData.UID].colorSubmitTime = colorChoiceData.colorSubmitTime;
+
+    var row = document.getElementById('userDataTable').rows[(users.length) - colorChoiceData.UID];
+
+    //pretty inefficient
+    addCellData(users[colorChoiceData.UID].userName, users[colorChoiceData.UID].colorChoiceRGB, row.cells[0]);
+    addCellData(users[colorChoiceData.UID].gender, users[colorChoiceData.UID].colorChoiceRGB, row.cells[1])
+    addCellData(colorChoiceData.colorChoiceRGB, colorChoiceData.colorChoiceRGB, row.cells[2]);
+    addCellData(colorChoiceData.colorChoiceHEX, colorChoiceData.colorChoiceRGB, row.cells[3]);
+    addCellData(colorChoiceData.colorSubmitTime, colorChoiceData.colorChoiceRGB, row.cells[4]);
+    addCellData(users[colorChoiceData.UID].IP, users[colorChoiceData.UID].colorChoiceRGB, row.cells[5]);
+
+    applyColorToOtherCells(colorChoiceData.colorChoiceRGB, row);
+
+    // for(var i = 0; i < row.cells.length; i++) { row.cells[i].style.color = colorChoiceData.colorChoiceRGB; }
 }
 
 //displays the names of each field at the top 
@@ -72,8 +92,9 @@ function displayHeaders(userDataTable) {
 
 function addCellData(text, color, cell) {
     var tempText;
+    cell.innerHTML = ""; //clears cell
 
-    if(text == '') { text = '-----'; } //if empty then 5 dashes (could casue confusin with Usrname)
+    if(text == '') { text = '-----'; } //if empty then 5 dashes (could casue confusion with Usrname)
     if(color == '-----') { color = 'rgb(255,255,255)'; } //if color empty then white (against black background)
 
     tempText = document.createElement('p'); //creates a p tag (stores text)
@@ -94,4 +115,8 @@ function addHeaderCellData(text, color, cell) {
     tempText.style.fontWeight = 900;
     cell.setAttribute('class', 'headers');
     cell.appendChild(tempText);
+}
+
+function applyColorToOtherCells(color, row) {
+    row.style.color = color;
 }
