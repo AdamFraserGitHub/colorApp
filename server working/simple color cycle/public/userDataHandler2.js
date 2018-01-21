@@ -18,14 +18,16 @@ function initDataReceived(usersdat) {
     for(var i = 0; i < users.length; i ++) {
         newRow = userDataTable.insertRow(1); // adds new row at top of table just bellow headers. means in reversed order of array
 
-        for (var j = 0; j < 6; j++) { cells[j] = newRow.insertCell(j); } // adds 6 new cells to the new row for each field
+        for (var j = 0; j < 7; j++) { cells[j] = newRow.insertCell(j); } // adds 6 new cells to the new row for each field
 
         addCellData(users[i].userName, users[i].colorChoiceRGB, cells[0]);
         addCellData(users[i].gender, users[i].colorChoiceRGB, cells[1])
         addCellData(users[i].colorChoiceRGB, users[i].colorChoiceRGB, cells[2]);
         addCellData(users[i].colorChoiceHEX, users[i].colorChoiceRGB, cells[3]);
-        addCellData(users[i].colorSubmitTime, users[i].colorChoiceRGB, cells[4]);
-        addCellData(users[i].IP, users[i].colorChoiceRGB, cells[5]);
+        addCellData(users[i].colorWheelAngle, users[i].colorChoiceRGB, cells[4]);
+        addCellData(users[i].colorSubmitTime, users[i].colorChoiceRGB, cells[5]);
+        addCellData(users[i].IP, users[i].colorChoiceRGB, cells[6]);
+        
         // addCellData(colors[i], colors[i], cells[3]);
         // addCellData(colorClass[i], colors[i], cells[4]);
         // addCellData(submitTime[i], colors[i], cells[5]);
@@ -39,31 +41,36 @@ function singleUserLoginDataRecieved(userdat) {
     var newRow;
     newRow = userDataTable.insertRow(1); // adds new row at top of table just bellow headers. means in reversed order of array
     var cells = []; //0 - usrName, 1 - gender, 2 - IP, 3 - colorChoice, 4 - colorClass, 5 - time,  WRONG
-    for (var j = 0; j < 6; j++) { cells[j] = newRow.insertCell(j); }
+    for (var j = 0; j < 7; j++) { cells[j] = newRow.insertCell(j); }
 
     addCellData(users[users.length - 1].userName, users[users.length - 1].colorChoiceRGB, cells[0]);
     addCellData(users[users.length - 1].gender, users[users.length - 1].colorChoiceRGB, cells[1])
     addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[2]);
     addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[3]);
-    addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[4]);
-    addCellData(users[users.length - 1].IP, users[users.length - 1].colorChoiceRGB, cells[5]);
-    console.log("other data");
+    addCellData('-----', users[users.length - 1].colorChoiceRGB, row.cells[4]);
+    addCellData('-----', users[users.length - 1].colorChoiceRGB, cells[5]);
+    addCellData(users[users.length - 1].IP, users[users.length - 1].colorChoiceRGB, cells[6]);
+
 }
 
 function colorChoiceRecieved(colorChoiceData) {
+    //could be replaced wit a single line
     users[colorChoiceData.UID].colorChoiceRGB = colorChoiceData.colorChoiceRGB;
     users[colorChoiceData.UID].colorChoiceHEX = colorChoiceData.colorChoiceHEX;
     users[colorChoiceData.UID].colorSubmitTime = colorChoiceData.colorSubmitTime;
+    users[colorChoiceData.UID].colorWheelAngle = colorChoiceData.colorWheelAngle;
 
     var row = document.getElementById('userDataTable').rows[(users.length) - colorChoiceData.UID];
 
-    //pretty inefficient
+    //pretty inefficient could be in one line also
     addCellData(users[colorChoiceData.UID].userName, users[colorChoiceData.UID].colorChoiceRGB, row.cells[0]);
     addCellData(users[colorChoiceData.UID].gender, users[colorChoiceData.UID].colorChoiceRGB, row.cells[1])
     addCellData(colorChoiceData.colorChoiceRGB, colorChoiceData.colorChoiceRGB, row.cells[2]);
     addCellData(colorChoiceData.colorChoiceHEX, colorChoiceData.colorChoiceRGB, row.cells[3]);
-    addCellData(colorChoiceData.colorSubmitTime, colorChoiceData.colorChoiceRGB, row.cells[4]);
-    addCellData(users[colorChoiceData.UID].IP, users[colorChoiceData.UID].colorChoiceRGB, row.cells[5]);
+    addCellData(users[colorChoiceData.UID].colorWheelAngle, users[colorChoiceData.UID].colorChoiceRGB, row.cells[4]); //to be replaced with class
+    addCellData(colorChoiceData.colorSubmitTime, colorChoiceData.colorChoiceRGB, row.cells[5]);
+    addCellData(users[colorChoiceData.UID].IP, users[colorChoiceData.UID].colorChoiceRGB, row.cells[6]);
+   
 
     applyColorToOtherCells(colorChoiceData.colorChoiceRGB, row);
 
@@ -76,14 +83,15 @@ function displayHeaders(userDataTable) {
     var white = 'rgb(255,255,255)';
     var cells = [];
 
-    for (var i = 0; i < 6; i++) { cells[i] = newRow.insertCell(i); } // adds 6 new cells to the new row for each field header
+    for (var i = 0; i < 7; i++) { cells[i] = newRow.insertCell(i); } // adds 6 new cells to the new row for each field header
 
     addHeaderCellData('Username', white, cells[0]);
     addHeaderCellData('Gender', white, cells[1]);
     addHeaderCellData('Color (RGB)', white, cells[2]);
     addHeaderCellData('Color (HEX)', white, cells[3]);
-    addHeaderCellData('color submit time', white, cells[4]);
-    addHeaderCellData('user IP', white, cells[5]);
+    addHeaderCellData('color class', white, cells[4]);
+    addHeaderCellData('color submit time', white, cells[5]);
+    addHeaderCellData('user IP', white, cells[6]);
     // addHeaderCellData('IP', white, cells[2]);
     // addHeaderCellData('Color Choice', white, cells[3]);
     // addHeaderCellData('Color Class', white, cells[4]);

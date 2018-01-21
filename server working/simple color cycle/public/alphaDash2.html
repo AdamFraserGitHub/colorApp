@@ -44,13 +44,14 @@
         </style>
         <script src="/socket.io/socket.io.js"></script>
         <script src="userDataHandler2.js"></script>
+        <script src="serverControlHandler.js"></script>
     </head>
 
     <body>
         <div class="btn-group" role="group" aria-label="control buttons" id="controlButtons">
-            <button type="button" class="btn btn-danger">shutdown</button>
-            <button type="button" class="btn btn-warning">restart</button>
-            <button type="button" class="btn btn-success">save</button>
+            <button type="button" class="btn btn-danger" onclick="shutdownServer()">shutdown</button>
+            <button type="button" class="btn btn-warning" onclick="restartServer()">restart</button>
+            <button type="button" class="btn btn-success" onclick="saveServer()">save</button> <!-- urgh now i need to implement a database! -->
         </div>
 
         <br/>

@@ -1,6 +1,5 @@
-/*
-    TODO : remove display color and replace with degToColor
-*/
+//modularize the shit out of it
+
 var colorWheel = document.getElementById('colorWheel');
 var colorCodeRGBOut = document.getElementById('colorCodeRGBOut');
 var colorCodeHEXOut = document.getElementById('colorCodeHEXOut');
@@ -8,12 +7,17 @@ var colorCodeHEXOut = document.getElementById('colorCodeHEXOut');
 var colorCodeHEX = '#FFFFFF';
 var colorCodeRGB = 'rgb(255,255,255)';
 
+//messy
+var thetaChoice;
+var currentTheta;
+
 function movement (e) {
     var boundRectWheelCanv = colorWheel.getBoundingClientRect();
     var x = e.clientX - boundRectWheelCanv.x - boundRectWheelCanv.width / 2;
     var y = e.clientY - boundRectWheelCanv.y - boundRectWheelCanv.height / 2;
     var angleToQuadLine = getAngleToQuadLine(x,y)
     var absoluteAngle = applyCASTOffset(x,y,angleToQuadLine);
+    currentTheta = absoluteAngle;//messy
 
     angleToColor(absoluteAngle);
 
@@ -95,8 +99,9 @@ socket.on('connect', function() {
 });
 
 function sendColorDataToServer() {
+    thetaChoice = currentTheta;//why?
 
     if(colorCodeHEX != '#FFFFFF') {
-        socket.emit('colorChoice', {UID: userID, colorChoiceRGB: colorCodeRGB, colorChoiceHEX : colorCodeHEX});
+        socket.emit('colorChoice', {UID: userID, colorChoiceRGB: colorCodeRGB, colorChoiceHEX : colorCodeHEX, colorWheelAngle: Math.round(currentTheta)});
     }  
 }
